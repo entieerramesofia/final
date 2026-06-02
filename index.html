@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+<head>
+    <!-- 
+     @link: favicon
+     @desc: Define el icono del sitio web que se mostrará en la pestaña del navegador
+    -->
+    <link rel="icon" type="image/png" href="img/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+    <link rel="manifest" href="img/site.webmanifest" />
+
+    <meta name="apple-mobile-web-app-title" content="tquieroma" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>こんにちは | tquieroma</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- OLIIIIIII-->
+    <!-- Metadatos básicos para SEO y redes sociales -->
+    <meta name="title" content=" tquieroma- desarrolladora Web, Diseñadora transmedia y Tecnóloga Creativa">
+    <meta name='image' content='https://entieerramesofia.github.io/odio/img/cuadro.png'>
+    <meta name='description'
+        content='es una marca especializada en el diseño transmedia, digital y tradicional, asimismo crea un espacio para exponer experiencias digitales innovadoras a través de tecnologías experimentales.'>
+    <meta name='keywords' content='fullstack, desarrollador web, tipografía, webgl'>
+
+    <!-- 
+  <link rel="canonical" href="https://entieerramesofia.github.io/entieerramesofia/">
+-->
+    <!-- 
+     @meta: OpenGraph
+     @desc: El protocolo Open Graph permite que pueda mostrarse en redes sociales una previsualización en formato de tarjeta
+     @see: https://ogp.me/
+    -->
+    <meta property="og:site_name" content="tquiero.ma" />
+    <meta property="og:locale" content="ma" />
+    <meta property='og:type' content='website'>
+    <meta property='og:title' content='marca mexicana de diseño transmedia'>
+    <meta property='og:image' content='https://entieerramesofia.github.io/entieerramesofia/img/cuadro.png'>
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta property='og:description'
+        content='es una marca especializada en el diseño transmedia, digital y tradicional, asimismo crea un espacio para exponer experiencias digitales innovadoras a través de tecnologías experimentales.'>
+    <!--meta property="og:url"                 content="https://juanfuent-es.github.io/juanfuent-es/"-->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Ballet:opsz@16..72&family=Bitcount+Grid+Single:wght@100..900&family=Bitcount+Prop+Single+Ink:wght@100..900&family=Bitcount+Single+Ink:wght@100..900&family=Codystar:wght@300;400&family=Coral+Pixels&family=Dokdo&family=Estonia&family=Lacquer&family=Lexend&family=Libre+Barcode+39+Extended+Text&family=Libre+Barcode+39+Text&family=Monsieur+La+Doulaise&family=Rock+3D&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    body {
+        overflow: hidden;
+        min-height: 100vh;
+        color: #ff0000;
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 22px),
+            linear-gradient(45deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 28px),
+            radial-gradient(circle at 18% 22%, rgba(255, 255, 255, 0.28), transparent 0.9px),
+            radial-gradient(circle at 78% 70%, rgba(255, 255, 255, 0.20), transparent 1px),
+            #73b8d7;
+        font-family: "Chicago", "Geneva", "MS Sans Serif", "Courier New", monospace;
+        image-rendering: pixelated;
+    }
+
+
+    .retro-desktop {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        padding: 26px 18px 18px;
+        overflow: hidden;
+    }
+
+
+    .retro-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20000;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        height: 20px;
+        padding: 0 10px;
+        color: #030303;
+        background: #f4f4dc;
+        border-bottom: 2px solid #111;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 20px;
+        box-shadow: inset 0 -1px #fff;
+    }
+
+
+    .retro-menu strong {
+        font-style: italic;
+    }
+
+
+    .desktop-icon-strip {
+        position: absolute;
+        left: 18px;
+        bottom: 18px;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: repeat(3, 58px);
+        gap: 14px 10px;
+    }
+
+
+    .desktop-icon-strip.extra-left {
+        top: 58px;
+        bottom: auto;
+        grid-template-columns: repeat(2, 58px);
+    }
+
+
+    .desktop-icon-strip.extra-right {
+        right: 24px;
+        bottom: 82px;
+        left: auto;
+        grid-template-columns: repeat(2, 58px);
+    }
+
+
+    .desktop-icon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        color: #050505;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: center;
+        text-shadow: 1px 1px #fff;
+    }
+
+
+    .desktop-icon::before {
+        content: "";
+        width: 28px;
+        height: 24px;
+        background:
+            linear-gradient(#f9f3b8 0 5px, #f6d66a 5px 100%);
+        border: 2px solid #111;
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35), inset 2px 2px #fff6cf;
+    }
+
+
+    .desktop-icon:nth-child(2n)::before {
+        background:
+            linear-gradient(#d9f6ff 0 5px, #66ccff 5px 100%);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35), inset 2px 2px #eafaff;
+    }
+
+
+    .desktop-icon:nth-child(3n)::before {
+        background:
+            linear-gradient(#ffe7f7 0 5px, #ff8bc8 5px 100%);
+        box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35), inset 2px 2px #fff4fb;
+    }
+
+
+    .retro-window {
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        background: #d8d8c8;
+        border: 2px solid #111;
+        box-shadow:
+            4px 4px 0 rgba(0, 0, 0, 0.36),
+            inset 2px 2px #fff,
+            inset -2px -2px #777;
+    }
+
+
+    .scene-window {
+        top: 42px;
+        right: 22px;
+        width: min(72vw, 980px);
+        height: calc(100vh - 76px);
+        min-height: 470px;
+    }
+
+
+    .controls-window {
+        top: 78px;
+        left: 34px;
+        width: 326px;
+        max-height: calc(100vh - 128px);
+        z-index: 20;
+    }
+
+
+    .mini-window {
+        width: 180px;
+        min-height: 100px;
+        z-index: 12;
+        font-size: 11px;
+    }
+
+
+    .video-window {
+        width: min(340px, calc(100vw - 36px));
+        height: 214px;
+        min-height: 160px;
+        z-index: 30;
+    }
+
+
+    .mini-window .window-titlebar {
+        background: #ff0000;
+    }
+
+
+    .video-resize-handle {
+        position: absolute;
+        right: 3px;
+        bottom: 3px;
+        width: 16px;
+        height: 16px;
+        cursor: nwse-resize;
+        touch-action: none;
+        background:
+            linear-gradient(135deg, transparent 0 45%, #d8d8c8 45% 55%, transparent 55%),
+            linear-gradient(135deg, transparent 0 62%, #d8d8c8 62% 72%, transparent 72%),
+            linear-gradient(135deg, transparent 0 79%, #d8d8c8 79% 89%, transparent 89%);
+        pointer-events: auto;
+    }
+
+
+    .mini-window .window-body {
+        padding: 8px;
+        background: #f7f5c6;
+        border-top: 1px solid #fffde2;
+    }
+
+
+    .mini-window.video-window .window-body {
+        padding: 4px;
+        background: #111;
+    }
+
+
+    .mini-video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: #000;
+        border: 1px solid #111;
+    }
+
+
+    .mini-window p {
+        margin-bottom: 7px;
+        line-height: 1.25;
+    }
+
+
+    .mini-meter {
+        height: 16px;
+        margin: 5px 0 8px;
+        background:
+            repeating-linear-gradient(90deg, #161244 0 9px, #f7f5c6 9px 12px);
+        border: 1px solid #111;
+        box-shadow: inset 1px 1px #fffde2;
+    }
+
+
+    .mini-status {
+        display: grid;
+        grid-template-columns: 8px 1fr;
+        gap: 6px;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+
+    .mini-status::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: #66ccff;
+        border: 1px solid #111;
+    }
+
+
+    .mini-window-bottom-right {
+        right: 18px;
+        bottom: 18px;
+    }
+
+
+    .mini-window-float {
+        left: 386px;
+        bottom: 42px;
+    }
+
+
+    .oli-link-window {
+        left: 386px;
+        bottom: 278px;
+        width: 220px;
+    }
+
+
+    .oli-link-window .window-body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .oli-link {
+        display: block;
+        padding: 10px 8px;
+        color: #111;
+        background: #66ccff;
+        border: 2px solid #111;
+        text-align: center;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: inset 2px 2px #d9f6ff, inset -2px -2px #2e7f9f;
+    }
+
+
+    .oli-link:hover {
+        background: #f6d66a;
+    }
+
+
+    .window-titlebar {
+        display: grid;
+        grid-template-columns: 18px 1fr 18px;
+        align-items: center;
+        height: 22px;
+        min-height: 22px;
+        color: #fff;
+        background: #161244;
+        border-bottom: 2px solid #111;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: grab;
+        user-select: none;
+        touch-action: none;
+    }
+
+
+    .retro-window.is-dragging .window-titlebar {
+        cursor: grabbing;
+    }
+
+
+    .window-titlebar span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+
+    .window-button {
+        width: 12px;
+        height: 12px;
+        margin: 0 auto;
+        background: #d8d8c8;
+        border: 1px solid #111;
+        box-shadow: inset 1px 1px #fff, inset -1px -1px #777;
+    }
+
+
+    .window-body {
+        position: relative;
+        flex: 1;
+        min-height: 0;
+        padding: 6px;
+        background: #ecebd0;
+    }
+
+
+    .scene-body {
+        padding: 5px;
+        background: #111;
+    }
+
+
+    #container {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+        background: #000;
+        border: 2px solid #111;
+        box-shadow: inset 0 0 0 2px #2f2f2f;
+    }
+
+
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    .control-panel {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-height: calc(100vh - 172px);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+        color: #101010;
+        font-size: 12px;
+        background: #f7f5c6;
+        border: 2px solid #111;
+        box-shadow: inset 2px 2px #fffde2, inset -2px -2px #9f9b70;
+    }
+
+
+    .control-section {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        padding: 8px;
+        background: #efedb8;
+        border: 1px solid #111;
+        box-shadow: inset 1px 1px #fffce1;
+    }
+
+
+    .control-section:last-child {
+        padding-bottom: 8px;
+    }
+
+
+    .control-title {
+        color: #111;
+        font-size: 11px;
+        line-height: 1;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        opacity: 1;
+        border-bottom: 1px dotted #111;
+        padding-bottom: 5px;
+    }
+
+
+    .file-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 8px 10px;
+        color: #111;
+        background: #d8d8c8;
+        border: 2px solid #111;
+        border-radius: 0;
+        cursor: pointer;
+        font-weight: 700;
+        text-align: center;
+        box-shadow: inset 2px 2px #fff, inset -2px -2px #777;
+    }
+
+
+    .control-row {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr) 44px;
+        align-items: center;
+        gap: 8px;
+        min-height: 25px;
+    }
+
+
+    .control-row.color-row {
+        grid-template-columns: 1fr 48px;
+    }
+
+
+    .control-row span:first-child {
+        overflow-wrap: anywhere;
+    }
+
+
+    .control-value {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+        padding: 2px 3px;
+        background: #fffde4;
+        border: 1px solid #111;
+    }
+
+
+    input[type="range"] {
+        width: 100%;
+        min-width: 0;
+        accent-color: #161244;
+    }
+
+
+    input[type="color"] {
+        width: 44px;
+        height: 28px;
+        border: 1px solid #111;
+        padding: 2px;
+        background: #d8d8c8;
+        cursor: pointer;
+    }
+
+
+    input[type="file"] {
+        display: none;
+    }
+
+
+    @media (max-width: 820px) {
+        .retro-desktop {
+            overflow-y: auto;
+            padding: 30px 10px 14px;
+        }
+
+
+        .retro-window {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            width: 100%;
+        }
+
+
+        .scene-window {
+            height: 56vh;
+            min-height: 360px;
+            margin-bottom: 12px;
+        }
+
+
+        .controls-window {
+            max-height: none;
+        }
+
+
+        .mini-window {
+            margin-bottom: 12px;
+        }
+
+
+        .control-panel {
+            max-height: none;
+        }
+
+
+        .control-row {
+            grid-template-columns: 76px minmax(0, 1fr) 42px;
+        }
+
+
+        .desktop-icon-strip {
+            display: none;
+        }
+    }
+</style>
+
+</head>
+
+<body>
+    <nav class="retro-menu" aria-label="Menu retro">
+        <strong>SacredNet FM</strong>
+        <span>File</span>
+        <span>ᯓ★</span>
+        <span>(๑ᵔ⤙ᵔ๑)</span>
+        <span>‧₊˚♪ 𝄞₊°❀⋆.</span>
+    </nav>
+
+
+    <div class="retro-desktop">
+        <div class="retro-window scene-window">
+            <div class="window-titlebar">
+                <i class="window-button" aria-hidden="true"></i>
+                <span>𓆝 𓆟 𓆞 𓆝 𓆟.mov</span>
+                <i class="window-button" aria-hidden="true"></i>
+            </div>
+            <div class="window-body scene-body">
+                <div id="container">
+                    <canvas id="c"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="retro-window controls-window">
+            <div class="window-titlebar">
+                <i class="window-button" aria-hidden="true"></i>
+                <span>c0ntrol_aN3l.sys</span>
+                <i class="window-button" aria-hidden="true"></i>
+            </div>
+            <div class="window-body">
+                <div class="control-panel" aria-label="Controles de geometria 3D">
+                    <section class="control-section">
+                        <label id="audioLabel" class="file-control" for="audioUpload">
+                            Carga un archivo de audio mp3
+                            <input id="audioUpload" type="file" accept="audio/*">
+                        </label>
+                    </section>
+
+
+                    <section id="coreControl" class="control-section">
+                        <div class="control-title">Esfera y glow</div>
+                        <label class="control-row">
+                            <span>Núcleo</span>
+                            <input id="coreSizeSlider" type="range" min="0.5" max="3" step="0.01" value="1">
+                            <span id="coreSizeLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Glow</span>
+                            <input id="glowSizeSlider" type="range" min="0.4" max="3" step="0.01" value="1">
+                            <span id="glowSizeLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Brillo</span>
+                            <input id="glowBrightnessSlider" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="glowBrightnessLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Distorsion</span>
+                            <input id="distortionSlider" type="range" min="0" max="1" step="0.01" value="0">
+                            <span id="distortionLabel" class="control-value">0.00</span>
+                        </label>
+                        <label class="control-row color-row">
+                            <span>Sphere color</span>
+                            <input id="coreColorPicker" type="color" value="#66ccff">
+                        </label>
+                        <label class="control-row color-row">
+                            <span>Glow color</span>
+                            <input id="glowColorPicker" type="color" value="#66ccff">
+                        </label>
+                    </section>
+
+
+                    <section id="geomControls" class="control-section">
+                        <div class="control-title">Geometria</div>
+                        <label class="control-row">
+                            <span>Fol</span>
+                            <input id="folScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="folLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Metatron</span>
+                            <input id="metatronScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="metatronLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Merkaba</span>
+                            <input id="merkabaScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="merkabaLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Sri</span>
+                            <input id="sriScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="sriLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Spiral</span>
+                            <input id="spiralScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="spiralLabel" class="control-value">1.00</span>
+                        </label>
+                        <label class="control-row">
+                            <span>Particles</span>
+                            <input id="particlesScale" type="range" min="0.2" max="3" step="0.01" value="1">
+                            <span id="particlesLabel" class="control-value">1.00</span>
+                        </label>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="retro-window mini-window mini-window-float video-window" id="opVideoWindow">
+            <div class="window-titlebar">
+                <i class="window-button" aria-hidden="true"></i>
+                <span>OP.MP4</span>
+                <i class="window-button" aria-hidden="true"></i>
+            </div>
+            <div class="window-body">
+                <video class="mini-video" src="img/OP.MP4" autoplay muted loop playsinline></video>
+            </div>
+            <i class="video-resize-handle" aria-hidden="true"></i>
+        </div>
+
+
+        <div class="retro-window mini-window oli-link-window">
+            <div class="window-titlebar">
+                <i class="window-button" aria-hidden="true"></i>
+                <span>oli_page.url</span>
+                <i class="window-button" aria-hidden="true"></i>
+            </div>
+            <div class="window-body">
+                <a class="oli-link" href="js/oli.html" target="_blank" rel="noopener">abrir Oli</a>
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="desktop-icon-strip" aria-hidden="true">
+            <span class="desktop-icon">Audio</span>
+            <span class="desktop-icon">Metatron</span>
+            <span class="desktop-icon">Glow</span>
+            <span class="desktop-icon">Distort</span>
+            <span class="desktop-icon">Grid</span>
+            <span class="desktop-icon">Archive</span>
+        </div>
+        <div class="desktop-icon-strip extra-left" aria-hidden="true">
+            <span class="desktop-icon">Loops</span>
+            <span class="desktop-icon">Seeds</span>
+            <span class="desktop-icon">Renders</span>
+            <span class="desktop-icon">Notes</span>
+            <span class="desktop-icon">Dreams</span>
+            <span class="desktop-icon">Dust</span>
+        </div>
+        <div class="desktop-icon-strip extra-right" aria-hidden="true">
+            <span class="desktop-icon">Oli</span>
+            <span class="desktop-icon">OP</span>
+            <span class="desktop-icon">Light</span>
+            <span class="desktop-icon">Noise</span>
+        </div>
+    </div>
+    <script src="js/geometriasagrada3d.js"></script>
+    <script>
+        (() => {
+            const windows = document.querySelectorAll(".retro-window");
+
+            let startX = 0;
+            let startY = 0;
+            let startWidth = 0;
+            let startHeight = 0;
+            let activeWindow = null;
+            let activeHandle = null;
+            let dragOffsetX = 0;
+            let dragOffsetY = 0;
+            let topZIndex = 30000;
+            const minWidth = 240;
+            const minHeight = 160;
+
+            const clamp = (value, min, max) => Math.max(min, Math.min(value, max));
+
+            const moveWindow = (win, x, y) => {
+                const maxX = window.innerWidth - win.offsetWidth;
+                const maxY = window.innerHeight - win.offsetHeight;
+                win.style.left = `${clamp(x, 0, Math.max(0, maxX))}px`;
+                win.style.top = `${clamp(y, 22, Math.max(22, maxY))}px`;
+                win.style.right = "auto";
+                win.style.bottom = "auto";
+                win.style.position = "absolute";
+            };
+
+            windows.forEach((win) => {
+                const handle = win.querySelector(".window-titlebar");
+                if (!handle) return;
+
+                handle.addEventListener("pointerdown", (event) => {
+                    const rect = win.getBoundingClientRect();
+                    activeWindow = win;
+                    activeHandle = handle;
+                    dragOffsetX = event.clientX - rect.left;
+                    dragOffsetY = event.clientY - rect.top;
+                    moveWindow(win, rect.left, rect.top);
+                    win.classList.add("is-dragging");
+                    win.style.zIndex = `${++topZIndex}`;
+                    handle.setPointerCapture(event.pointerId);
+                });
+
+                handle.addEventListener("pointermove", (event) => {
+                    if (activeWindow !== win || !win.classList.contains("is-dragging")) return;
+                    moveWindow(win, event.clientX - dragOffsetX, event.clientY - dragOffsetY);
+                });
+
+                const stopDragging = (event) => {
+                    win.classList.remove("is-dragging");
+                    if (activeHandle?.hasPointerCapture(event.pointerId)) {
+                        activeHandle.releasePointerCapture(event.pointerId);
+                    }
+                    activeWindow = null;
+                    activeHandle = null;
+                };
+
+                handle.addEventListener("pointerup", stopDragging);
+                handle.addEventListener("pointercancel", stopDragging);
+            });
+
+            const win = document.getElementById("opVideoWindow");
+            const resizeHandle = win?.querySelector(".video-resize-handle");
+            if (!win || !resizeHandle) return;
+
+            resizeHandle.addEventListener("pointerdown", (event) => {
+                event.preventDefault();
+                const rect = win.getBoundingClientRect();
+                startX = event.clientX;
+                startY = event.clientY;
+                startWidth = rect.width;
+                startHeight = rect.height;
+                moveWindow(win, rect.left, rect.top);
+                win.classList.add("is-resizing");
+                win.style.zIndex = `${++topZIndex}`;
+                resizeHandle.setPointerCapture(event.pointerId);
+            });
+
+            resizeHandle.addEventListener("pointermove", (event) => {
+                if (!win.classList.contains("is-resizing")) return;
+                const rect = win.getBoundingClientRect();
+                const maxWidth = window.innerWidth - rect.left;
+                const maxHeight = window.innerHeight - rect.top;
+                const nextWidth = startWidth + event.clientX - startX;
+                const nextHeight = startHeight + event.clientY - startY;
+                win.style.width = `${clamp(nextWidth, minWidth, maxWidth)}px`;
+                win.style.height = `${clamp(nextHeight, minHeight, maxHeight)}px`;
+            });
+
+            const stopResizing = (event) => {
+                win.classList.remove("is-resizing");
+                if (resizeHandle.hasPointerCapture(event.pointerId)) {
+                    resizeHandle.releasePointerCapture(event.pointerId);
+                }
+            };
+
+            resizeHandle.addEventListener("pointerup", stopResizing);
+            resizeHandle.addEventListener("pointercancel", stopResizing);
+        })();
+    </script>
+</body>
+
+
+</html>
